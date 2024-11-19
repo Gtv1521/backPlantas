@@ -18,6 +18,23 @@ namespace PlantasBackend.Utils
             _cloudinary = new(settings.Value.Url);
         }
 
+        public void CreateFolder()
+        {
+            string projectRoot = AppDomain.CurrentDomain.BaseDirectory;
+
+            // Definir el nombre de la nueva carpeta
+            string newFolderName = "Upload";
+
+            string folderPath = Path.Combine(projectRoot, newFolderName);
+
+            // Verificar si la carpeta ya existe
+            if (!Directory.Exists(folderPath) )
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+        }
+
+
         public async Task<string> ImageUpload(IFormFile img)
         {
             var Name = Guid.NewGuid().ToString() + ".jpg";//crea un id que sera el nombre dela imagen
@@ -34,6 +51,7 @@ namespace PlantasBackend.Utils
 
         public async Task<(string?, string?)> UpCloudinary(IFormFile image)
         {
+            CreateFolder(); //crea la carpeta de uploads si no existe
             if (image == null) return (null, null);
             var route = await ImageUpload(image); //se crea la carpeta y se almacena imagen en 
             _cloudinary.Api.Secure = true;
