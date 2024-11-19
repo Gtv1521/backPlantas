@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PlantasBackend</name>
+    </assembly>
+    <members>
+        <member name="M:PlantasBackend.Controllers.Plants.Get">
+            <summary>
+             Get an list of something plants.
+            </summary>
+            <remarks>
+            Sample Request:
+            
+                GET /api/plants/viewall
+            </remarks>
+            <returns>true</returns>
+            <response code="200">Todos los usuarios.</response>
+            <response code="500">No se encuentran datos</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Plants.GetByPlant(System.String)">
+            <summary>
+             Get one plants for id.
+            </summary>
+            <param name="id"></param>
+            <remarks>
+            Sample Request:
+            
+                GET /api/plants/view_plant_id
+                {
+                    "id" = "668d4a0d986faf64730e222b"
+                }
+            </remarks>
+            
+            <returns>true</returns>
+            <response code="200">Something plants.</response>
+            <response code="404">Not found data.</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Plants.GetByName(System.String)">
+            <summary>
+            Get a plant for the name of plant
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+            <remarks>
+            Sample request: 
+            
+                GET /api/plant/view_plant_name
+                {
+                    "name": "granadilla"
+                }
+            </remarks>
+            <response code="200">Plant data</response>
+            <response code="400">Failed get plant</response>
+            <response code="404">Not found plant</response>
+            <exception cref="T:System.ApplicationException"></exception>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Plants.Post(PlantasBackend.Dto.PlantsDto)">
+            <summary>
+            Insert one plant.
+            </summary>
+            <remarks>
+            Sample Request:
+            
+                POST /api/plants/insert
+                {
+                    
+                }
+            </remarks>
+            <returns>true</returns>
+            <response code="200">Something plants.</response>
+            <response code="400">Not fount data</response>
+            <response code="500">Server error</response>
+        </member>
+    </members>
+</doc>
