@@ -48,3 +48,4 @@
 /home/gustavo/Documentos/Desarrollo/C#/PlantasBackend/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
 /home/gustavo/Documentos/Desarrollo/C#/PlantasBackend/bin/Debug/net8.0/PlantasBackend.xml
 /home/gustavo/Documentos/Desarrollo/C#/PlantasBackend/obj/Debug/net8.0/PlantasBackend.xml
+/home/gustavo/Documentos/Desarrollo/C#/PlantasBackend/obj/Debug/net8.0/PlantasBackend.sourcelink.json

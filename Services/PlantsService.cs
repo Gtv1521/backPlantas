@@ -26,7 +26,7 @@ namespace PlantasBackend.Services
 
 
         // method for into one plants.
-        public async Task<bool> InsertOneAsync(PlantsDto model)
+        public async Task<bool> InsertOneAsync(AllPlantDto model)
         {
             try
             {
@@ -38,7 +38,8 @@ namespace PlantasBackend.Services
                     Description = model.Description,
                     Imagen = Imagen,
                     IdImagen = IdImagen,
-                    PlantFamilyId = "5f6d8653404d614218f0b596",
+                    PlantFamilyId = model.PlantFamilyId,
+                    DiseaseIds = model.DiseaseIds,
                 };
                 _upImage.DeleteDir();
                 await _interface.InsertData(modelo);

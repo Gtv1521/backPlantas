@@ -109,7 +109,7 @@ namespace PlantasBackend.Controllers
         /// 
         ///     GET /api/plant/view_plant_name
         ///     {
-        ///         "name": "granadilla"
+        ///         "name": "Curuba"
         ///     }
         /// </remarks>
         /// <response code="200">Plant data</response>
@@ -118,6 +118,9 @@ namespace PlantasBackend.Controllers
         /// <exception cref="ApplicationException"></exception>
         [HttpGet]
         [Route("view_plant_name")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PlantsModel))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultData))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultData))]
         public async Task<IActionResult> GetByName(string name)
         {
             try
@@ -153,7 +156,15 @@ namespace PlantasBackend.Controllers
         /// 
         ///     POST /api/plants/insert
         ///     {
-        ///         
+        ///         "Name" : "Lulo",
+        ///         "Description" : "planta con frutos espinosos",
+        ///         "FamilyId" : "673424ba711637b1f4ee2418",
+        ///         "DiseaseIds" : {
+        ///             "673523dc5b21f11d8693fdc1",
+        ///             "668d4a0d986faf64739e222b",
+        ///             "668d4a0d986faf64770e222c"
+        ///             },
+        ///         "Image" : ""
         ///     }
         /// </remarks>
         /// <returns>true</returns>
@@ -163,10 +174,10 @@ namespace PlantasBackend.Controllers
         [HttpPost]
         [Route("insert")]
         [Consumes("multipart/form-data")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AllPlantDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultData))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultData))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ResultData))]
-        public async Task<IActionResult> Post([FromForm] PlantsDto model)
+        public async Task<IActionResult> Post([FromForm] AllPlantDto model)
         {
             try
             {
@@ -192,10 +203,38 @@ namespace PlantasBackend.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Update data of one plant.
+        /// </summary>
+        /// <remarks>
+        /// Sample Request:
+        /// 
+        ///     POST /api/plants/update_plant
+        ///     {
+        ///         "Id": "668d4a0d986faf64730e222b"
+        ///         "Name" : "Lulo",
+        ///         "Description" : "planta con frutos espinosos",
+        ///         "FamilyId" : "673424ba711637b1f4ee2418",
+        ///         "DiseaseIds" : {
+        ///             "673523dc5b21f11d8693fdc1",
+        ///             "668d4a0d986faf64739e222b",
+        ///             "668d4a0d986faf64770e222c"
+        ///             },
+        ///         "Image" : ""
+        ///     }
+        /// </remarks>
+        /// <returns>true</returns>
+        /// <response code="200">Updated.</response>
+        /// <response code="400">Error server.</response>
+        /// <response code="404">Not fount data</response>
+        /// <response code="500">Server error</response>
         [HttpPost]
-        [Route("update_plant")]
-        public async Task<IActionResult> UpdateOne([FromForm] PlantsDto model)
+        [Route("update")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultData))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultData))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultData))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ResultData))]
+        public async Task<IActionResult> UpdateOne([FromForm] IdPlantsDto model)
         {
             try
             {
@@ -203,7 +242,6 @@ namespace PlantasBackend.Controllers
                 {
                     Name = model.Name,
                     Description = model.Description,
-                    // Add other properties as needed.
                 };
                 if (await _service.UpdateOneAsync(modelo))
                 {
@@ -233,8 +271,28 @@ namespace PlantasBackend.Controllers
             }
         }
 
+        /// <summary>
+        /// Delete one plant from the service.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     GET /api/plant/delete_plant
+        ///     {
+        ///         "id": "668eab036a05f5dfcb196f32"
+        ///     }
+        /// </remarks>
+        /// <exception cref="ApplicationException"></exception>
+        /// <response code="200">Deleted</response>
+        /// <response code="400">Error internal server</response>
+        /// <response code="404">Not found</response>
         [HttpDelete]
-        [Route("delete_plant")]
+        [Route("delete")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultData))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultData))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultData))]
         public async Task<IActionResult> DeleteOne(string id)
         {
             try

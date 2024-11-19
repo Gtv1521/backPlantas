@@ -24,9 +24,14 @@ builder.Services.AddControllers();
 
 // declared of Services and Collections
 builder.Services.AddScoped<Context>();
+
 builder.Services.AddScoped<IDataCrud<PlantsModel>, PlantsCollection>();
 builder.Services.AddScoped<IOneData<PlantsModel>, PlantsCollection>();
 builder.Services.AddScoped<PlantsService>();
+
+builder.Services.AddScoped<IDataCrud<DiseasesModel>, DiseasesCollection>();
+builder.Services.AddScoped<IOneData<DiseasesModel>, DiseasesCollection>();
+builder.Services.AddScoped<DiseasesService>();
 
 builder.Services.AddScoped<upImage>();
 
@@ -132,7 +137,7 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
