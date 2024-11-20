@@ -2,23 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using PlantasBackend.Dto.Diseases;
 using PlantasBackend.Interfaces;
 using PlantasBackend.Models;
+using PlantasBackend.Utils;
 
 namespace PlantasBackend.Services
 {
     public class DiseasesService
     {
         private readonly IDataCrud<DiseasesModel> _diseases;
-        public DiseasesService(IDataCrud<DiseasesModel> diseases)
+        private readonly upImage _utilityImage;
+        public DiseasesService(IDataCrud<DiseasesModel> diseases, upImage utilityImage)
         {
             _diseases = diseases;
+            _utilityImage = utilityImage;
         }
 
         public async Task<bool> DeleteOneAsync(string id)
         {
             try
             {
+                var diseases = await GetOneAsync(id);
+                await _utilityImage.DeleteCloudinary(diseases.IdImage);
                 await _diseases.DeleteById(id);
                 return true;
             }
@@ -53,11 +59,18 @@ namespace PlantasBackend.Services
             }
         }
 
-        public async Task<bool> InsertOneAsync(DiseasesModel model)
+        public async Task<bool> InsertOneAsync(DiseasesDto model)
         {
             try
             {
-                await _diseases.InsertData(model);
+                (string Image, string IdImage) = await _utilityImage.UpCloudinary(model.Image, "Diseases");
+                var modelo = new DiseasesModel{
+                    DiseasesName = model.Name,
+                    DiseasesDescription = model.Description,
+                    Imagen = Image,
+                    IdImage = IdImage,
+                }; 
+                await _diseases.InsertData(modelo);
                 return true;
             }
             catch (System.Exception ex)

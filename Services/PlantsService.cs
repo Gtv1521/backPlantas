@@ -30,7 +30,7 @@ namespace PlantasBackend.Services
         {
             try
             {
-                (string Imagen, string IdImagen) = await _upImage.UpCloudinary(model.Image);
+                (string Imagen, string IdImagen) = await _upImage.UpCloudinary(model.Image, "Plants");
 
                 var modelo = new PlantsModel
                 {
@@ -72,6 +72,8 @@ namespace PlantasBackend.Services
         {
             try
             {
+                var resul = await GetOneAsync(id);
+                await _upImage.DeleteCloudinary(resul.IdImagen);
                 await _interface.DeleteById(id);
                 return true;
             }

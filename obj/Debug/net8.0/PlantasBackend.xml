@@ -19,13 +19,37 @@
             </summary>
             <param name="id"></param>
             <returns></returns>
+            <remarks> 
+            Sample request: 
+            
+                GET /api/Diseases/view_disease_id/{id}
+                {
+                    "id": "673d0d7ab2310184458dbfde"
+                }
+            </remarks>
+            <response code="200">Disease.</response>
+            <response code="404">Not found.</response>
+            <response code="500">Error server.</response>
         </member>
-        <member name="M:PlantasBackend.Controllers.Diseases.InsertDisease(PlantasBackend.Models.DiseasesModel)">
+        <member name="M:PlantasBackend.Controllers.Diseases.InsertDisease(PlantasBackend.Dto.Diseases.DiseasesDto)">
             <summary>
             Insert one disease.
             </summary>
             <param name="model"></param>
             <returns></returns>
+            <remarks> 
+            Sample request: 
+            
+                POST /api/Diseases/insert
+                {
+                    "name": "",
+                    "description": "",
+                    "image": ""
+                }
+            </remarks>
+            <response code="200">Disease.</response>
+            <response code="404">Not found.</response>
+            <response code="500">Error server.</response>
         </member>
         <member name="M:PlantasBackend.Controllers.Diseases.UpdateDisease(PlantasBackend.Models.DiseasesModel)">
             <summary>
@@ -33,6 +57,36 @@
             </summary>
             <param name="model"></param>
             <returns></returns>
+            <remarks>
+            Sample request: 
+            
+                POST /api/diseases/update
+                {
+                    "id": "",
+                    "name": "",
+                    "description": "",
+                    "image": ""
+                }
+            </remarks>
+            <response code="200">OK</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Diseases.DeleteDisease(System.String)">
+            <summary>
+            Delete a disease for id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <remarks> 
+            Sample request: 
+            
+                DELETE /api/Diseases/delete/{id}
+                {
+                    "id": "673d0d7ab2310184458dbfde"
+                }
+            </remarks>
+            <response code="200">Disease.</response>
+            <response code="404">Not found.</response>
+            <response code="500">Error server.</response>
         </member>
         <member name="M:PlantasBackend.Controllers.Plants.Get">
             <summary>

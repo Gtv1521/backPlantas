@@ -18,19 +18,17 @@ namespace PlantasBackend.Utils
             _cloudinary = new(settings.Value.Url);
         }
 
-        public void CreateFolder()
+        public async Task CreateFolder(string folderName)
         {
             string projectRoot = AppDomain.CurrentDomain.BaseDirectory;
 
-            // Definir el nombre de la nueva carpeta
-            string newFolderName = "Upload";
-
-            string folderPath = Path.Combine(projectRoot, newFolderName);
+            string folderPath = Path.Combine(projectRoot, folderName);
 
             // Verificar si la carpeta ya existe
-            if (!Directory.Exists(folderPath) )
+            if (!Directory.Exists(folderPath))
             {
-                Directory.CreateDirectory(folderPath);
+                await Task.Run(() => Directory.CreateDirectory(folderPath));
+                System.Console.WriteLine("Folder created");
             }
         }
 
@@ -49,9 +47,9 @@ namespace PlantasBackend.Utils
             return Route;
         }
 
-        public async Task<(string?, string?)> UpCloudinary(IFormFile image)
+        public async Task<(string?, string?)> UpCloudinary(IFormFile image, string path)
         {
-            CreateFolder(); //crea la carpeta de uploads si no existe
+            await CreateFolder("Upload"); //crea la carpeta de uploads si no existe
             if (image == null) return (null, null);
             var route = await ImageUpload(image); //se crea la carpeta y se almacena imagen en 
             _cloudinary.Api.Secure = true;
@@ -60,7 +58,8 @@ namespace PlantasBackend.Utils
                 File = new FileDescription(@"" + route),
                 UseFilename = true,
                 UniqueFilename = false,
-                Overwrite = true
+                Overwrite = true,
+                Folder = path
             };
             _imagePath = route.ToString();
             var uploadResult = _cloudinary.Upload(uploadParams);
@@ -78,6 +77,13 @@ namespace PlantasBackend.Utils
             {
                 File.Delete(_imagePath);
             }
+        }
+
+        // delete a file from cloudinary
+        public async Task DeleteCloudinary(string publicId)
+        {
+            var deleteParams = new DeletionParams(publicId);
+            var resultado = await _cloudinary.DestroyAsync(deleteParams);
         }
     }
 }
