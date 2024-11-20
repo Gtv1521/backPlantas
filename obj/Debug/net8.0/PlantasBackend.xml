@@ -48,6 +48,7 @@
                 }
             </remarks>
             <response code="200">Disease.</response>
+            <response code="400">Failed of get data.</response>
             <response code="404">Not found.</response>
             <response code="500">Error server.</response>
         </member>

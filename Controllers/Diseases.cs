@@ -71,7 +71,7 @@ namespace PlantasBackend.Controllers
         [HttpGet]
         [Route("view_disease/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DiseasesModel))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultData))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultData))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetByDiseases(string id)
         {
@@ -105,6 +105,7 @@ namespace PlantasBackend.Controllers
         ///     }
         /// </remarks>
         /// <response code="200">Disease.</response>
+        /// <response code="400">Failed of get data.</response>
         /// <response code="404">Not found.</response>
         /// <response code="500">Error server.</response>
         [HttpPost]
@@ -112,6 +113,7 @@ namespace PlantasBackend.Controllers
         [Consumes("multipart/form-data")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultData))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultData))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultData))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> InsertDisease([FromForm] DiseasesDto model)
         {
