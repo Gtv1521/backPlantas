@@ -208,10 +208,7 @@
                 {
                     "Name": "",
                     "Description": "Plague",
-                    "Image": {
-                    "",
-                    ""
-                    }
+                    "Image": ""
                 }
             </remarks>
             <param name="model"></param>
@@ -232,10 +229,7 @@
                     "Id": "",
                     "Name": "",
                     "Description": "Plague",
-                    "Image": {
-                    "",
-                    ""
-                    }
+                    "Image": ""
                 }
             </remarks>
             <param name="model"></param>
