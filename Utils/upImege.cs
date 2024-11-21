@@ -15,9 +15,33 @@ namespace PlantasBackend.Utils
         private string _imagePath;
         public upImage(IOptions<CloudinaryModel> settings)
         {
-            _cloudinary = new(settings.Value.Url);
+            try
+            {
+                _cloudinary = new(settings.Value.Url);
+            }
+            catch (System.Exception ex)
+            {
+
+                throw new ApplicationException($"Failed Connecting to Cloudinary {ex.Message}");
+            }
         }
 
+        // create folder if not exists in local
+        public async Task CreateFolder(string folderName)
+        {
+            string projectRoot = AppDomain.CurrentDomain.BaseDirectory;
+
+            string folderPath = Path.Combine(projectRoot, folderName);
+
+            // Verificar si la carpeta ya existe
+            if (!Directory.Exists(folderPath))
+            {
+                await Task.Run(() => Directory.CreateDirectory(folderPath));
+                System.Console.WriteLine("Folder created");
+            }
+        }
+
+        // create file which image 
         public async Task<string> ImageUpload(IFormFile img)
         {
             var Name = Guid.NewGuid().ToString() + ".jpg";//crea un id que sera el nombre dela imagen
@@ -32,8 +56,10 @@ namespace PlantasBackend.Utils
             return Route;
         }
 
-        public async Task<(string?, string?)> UpCloudinary(IFormFile image)
+        // insert image into cloudinary folder
+        public async Task<(string?, string?)> UpCloudinary(IFormFile image, string path)
         {
+            await CreateFolder("Upload"); //crea la carpeta de uploads si no existe
             if (image == null) return (null, null);
             var route = await ImageUpload(image); //se crea la carpeta y se almacena imagen en 
             _cloudinary.Api.Secure = true;
@@ -42,7 +68,8 @@ namespace PlantasBackend.Utils
                 File = new FileDescription(@"" + route),
                 UseFilename = true,
                 UniqueFilename = false,
-                Overwrite = true
+                Overwrite = true,
+                Folder = path
             };
             _imagePath = route.ToString();
             var uploadResult = _cloudinary.Upload(uploadParams);
@@ -60,6 +87,13 @@ namespace PlantasBackend.Utils
             {
                 File.Delete(_imagePath);
             }
+        }
+
+        // delete a file from cloudinary
+        public async Task DeleteCloudinary(string publicId)
+        {
+            var deleteParams = new DeletionParams(publicId);
+            var resultado = await _cloudinary.DestroyAsync(deleteParams);
         }
     }
 }

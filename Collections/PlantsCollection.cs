@@ -46,6 +46,7 @@ namespace PlantasBackend.Collections
             }
         }
 
+        // method return data of one Plants
         public async Task<PlantsModel> GetById(string id)
         {
             try
@@ -57,7 +58,8 @@ namespace PlantasBackend.Collections
                 throw new ApplicationException($"Not found data - {ex.Message}");
             }
         }
-
+        
+        // method return data of one plant for name
         public async Task<PlantsModel> GetOneData(string name)
         {
             try
@@ -100,7 +102,5 @@ namespace PlantasBackend.Collections
                 throw new ApplicationException($"Failed updated plant - {ex.Message}");
             }
         }
-
-
     }
 }

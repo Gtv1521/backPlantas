@@ -4,19 +4,259 @@
         <name>PlantasBackend</name>
     </assembly>
     <members>
-        <member name="M:PlantasBackend.Controllers.Plants.Get">
+        <member name="M:PlantasBackend.Controllers.Diseases.GetAllDiseases">
             <summary>
-             Get an list of something plants.
+            Get something data from the diseases registered.
+            </summary>
+            <returns></returns>
+            <response code="200">OK</response>
+            <response code="404">Not fount.</response>
+            <response code="500">Error internal server.</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Diseases.GetByDiseases(System.String)">
+            <summary>
+            Get information of disease for id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <remarks> 
+            Sample request: 
+            
+                GET /api/Diseases/view_disease_id/{id}
+                {
+                    "id": "673d0d7ab2310184458dbfde"
+                }
+            </remarks>
+            <response code="200">Disease.</response>
+            <response code="500">Error server.</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Diseases.InsertDisease(PlantasBackend.Dto.Diseases.DiseasesDto)">
+            <summary>
+            Insert one disease.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+            <remarks> 
+            Sample request: 
+            
+                POST /api/Diseases/insert
+                {
+                    "name": "",
+                    "description": "",
+                    "image": ""
+                }
+            </remarks>
+            <response code="200">Disease.</response>
+            <response code="400">Failed of get data.</response>
+            <response code="500">Error server.</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Diseases.UpdateDisease(PlantasBackend.Dto.Diseases.DataDiseaseDto)">
+            <summary>
+            Update data from disease.
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+            <remarks>
+            Sample request: 
+            
+                POST /api/diseases/update
+                {
+                    "id": "",
+                    "name": "",
+                    "description": "",
+                    "image": ""
+                }
+            </remarks>
+            <response code="200">OK</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Diseases.DeleteDisease(System.String)">
+            <summary>
+            Delete a disease for id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <remarks> 
+            Sample request: 
+            
+                DELETE /api/Diseases/delete/{id}
+                {
+                    "id": "673d0d7ab2310184458dbfde"
+                }
+            </remarks>
+            <response code="200">Disease.</response>
+            <response code="404">Not found data </response>
+            <response code="500">Error server.</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Family.GetAllFamily">
+            <summary>
+            Get all familys registered 
+            </summary>
+            <returns></returns>
+            <response code="200">Data familys.</response>
+            <response code="404">No data of family</response>
+            <response code="500">Error server</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Family.GetFamilyById(System.String)">
+            <summary>
+            Get one family registered
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <remarks>
+            Sample request:
+            
+                GET /api/Family/view_family/{id}
+                {
+                    "id": "673424ba711637b1f4ee2418"
+                }
+            </remarks>
+            <response code="200">Data Family</response>
+            <response code="404">No data family</response>
+            <response code="500">Error server</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Family.InsertFamily(PlantasBackend.Dto.PlantsDto)">
+            <summary>
+            Insert data into family.
+            </summary>
+            <returns></returns>
+            <remarks>
+            Sample request:
+            
+                POST /api/Family/insert
+                {
+                    "Name": "",
+                    "Description": "Family"
+                }
+            </remarks>
+            <response code="200">OK</response>
+            <response code="400">Error insert data family</response>
+            <response code="500">Error server</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Family.UpdateDataFamily(PlantasBackend.Models.FamilyModel)">
+            <summary>
+            Update data into family.
             </summary>
             <remarks>
-            Sample Request:
+            Sample request:
             
-                GET /api/plants/viewall
+                POST /api/Family/update
+                {
+                    "Id": "",
+                    "Name": "family new",
+                    "Description": "new Description"
+                }
             </remarks>
-            <returns>true</returns>
-            <response code="200">Todos los usuarios.</response>
-            <response code="500">No se encuentran datos</response>
+            <param name="model"></param>
+            <returns></returns>
+            <response code="200">OK</response>
+            <response code="400">Error update data family</response>
+            <response code="500">Error server</response>
         </member>
+        <member name="M:PlantasBackend.Controllers.Family.DeleteDataFamily(System.String)">
+            <summary>
+            Delete a family for id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <remarks>
+            Sample request:
+            
+                DELETE /api/Family/delete/{id}
+                {
+                    "id": "668d4a0d986faf64730e222b"
+                }
+            </remarks>
+            <response code="200">OK</response>
+            <response code="400">Error delete data family</response>
+            <response code="500">Error server</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Plague.GetAllPlague">
+            <summary>
+            Get something list of data for plagues
+            </summary>
+            <returns></returns>
+            <response code="200">List plagues</response>
+            <response code="404">Not found plagues</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Plague.GetPlagueById(System.String)">
+            <summary>
+            Get plague for id of requested 
+            </summary>
+            <remarks>
+            Sample request:
+            
+                GET /api/Plague/view_plague/{id}
+                {
+                    "id": "668eab036a05f5dfcb196f32"
+                }
+            </remarks>
+            <param name="id"></param>
+            <returns></returns>
+            <response code="200">Data plague</response>
+            <response code="404">Not found data plague</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Plague.InsertPlague(PlantasBackend.Dto.Diseases.DiseasesDto)">
+            <summary>
+            Insert data for new plagues
+            </summary>
+            <remarks>
+            Sample request:
+            
+                POST /api/Plague/insert
+                {
+                    "Name": "",
+                    "Description": "Plague",
+                    "Image": ""
+                }
+            </remarks>
+            <param name="model"></param>
+            <returns></returns>
+            <response code="200">Plague added</response>
+            <response code="400">Failed at insert plague</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Plague.UpdatePlague(PlantasBackend.Dto.Diseases.DataDiseaseDto)">
+            <summary>
+            Update date of one plague
+            </summary>
+            <remarks> 
+            Sample request:
+            
+                POST /api/Plague/update
+                {
+                    "Id": "",
+                    "Name": "",
+                    "Description": "Plague",
+                    "Image": ""
+                }
+            </remarks>
+            <param name="model"></param>
+            <returns></returns>
+            <response code="200">Data update successfully</response>
+            <response code="400">Failed at update data</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Plague.DeletePlague(System.String)">
+            <summary>
+            Delete one plague for id.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <remarks> 
+            Sample request:
+            
+                DELETE /api/Plague/delete/{id}
+                {
+                    "id": "668d4a0d986faf64730e222b"
+                }
+            </remarks>
+            <response code="200">Delete plague successfully </response>
+            <response code="400">Failed delete plague</response>
+            <response code="500">Server error </response>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:PlantasBackend.Controllers.Plants.Get" -->
         <member name="M:PlantasBackend.Controllers.Plants.GetByPlant(System.String)">
             <summary>
              Get one plants for id.
@@ -25,7 +265,7 @@
             <remarks>
             Sample Request:
             
-                GET /api/plants/view_plant_id
+                GET /api/plants/view_plant_id/{id}
                 {
                     "id" = "668d4a0d986faf64730e222b"
                 }
@@ -47,15 +287,14 @@
             
                 GET /api/plant/view_plant_name
                 {
-                    "name": "granadilla"
+                    "Name": "Curuba"
                 }
             </remarks>
             <response code="200">Plant data</response>
-            <response code="400">Failed get plant</response>
-            <response code="404">Not found plant</response>
-            <exception cref="T:System.ApplicationException"></exception>
+            <response code="404">Not found data of plant</response>
+            <response code="500">Server error</response>
         </member>
-        <member name="M:PlantasBackend.Controllers.Plants.Post(PlantasBackend.Dto.PlantsDto)">
+        <member name="M:PlantasBackend.Controllers.Plants.Post(PlantasBackend.Dto.AllPlantDto)">
             <summary>
             Insert one plant.
             </summary>
@@ -64,12 +303,64 @@
             
                 POST /api/plants/insert
                 {
-                    
+                    "Name" : "Lulo",
+                    "Description" : "planta con frutos espinosos",
+                    "FamilyId" : "673424ba711637b1f4ee2418",
+                    "DiseaseIds" : {
+                        "673523dc5b21f11d8693fdc1",
+                        "668d4a0d986faf64739e222b",
+                        "668d4a0d986faf64770e222c"
+                        },
+                    "Image" : ""
                 }
             </remarks>
             <returns>true</returns>
             <response code="200">Something plants.</response>
             <response code="400">Not fount data</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Plants.UpdateOne(PlantasBackend.Dto.IdPlantsDto)">
+            <summary>
+            Update data of one plant.
+            </summary>
+            <remarks>
+            Sample Request:
+            
+                POST /api/plants/update_plant
+                {
+                    "Id": "668d4a0d986faf64730e222b"
+                    "Name" : "Lulo",
+                    "Description" : "planta con frutos espinosos",
+                    "FamilyId" : "673424ba711637b1f4ee2418",
+                    "DiseaseIds" : {
+                        "673523dc5b21f11d8693fdc1",
+                        "668d4a0d986faf64739e222b",
+                        "668d4a0d986faf64770e222c"
+                        },
+                    "Image" : ""
+                }
+            </remarks>
+            <returns>true</returns>
+            <response code="200">Updated.</response>
+            <response code="404">Not fount data</response>
+            <response code="500">Server error</response>
+        </member>
+        <member name="M:PlantasBackend.Controllers.Plants.DeleteOne(System.String)">
+            <summary>
+            Delete one plant from the service.
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+            <remarks>
+            Sample request:
+            
+                DELETE /api/Plant/delete/{id}
+                {
+                    "id": "668eab036a05f5dfcb196f32"
+                }
+            </remarks>
+            <response code="200">Deleted</response>
+            <response code="400">Error internal server</response>
             <response code="500">Server error</response>
         </member>
     </members>

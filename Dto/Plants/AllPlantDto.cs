@@ -7,12 +7,8 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace PlantasBackend.Dto
 {
-    public class AllPlantDto : PlantsDto
+    public class AllPlantDto : ImageDto
     {
-        public string? Imagen { get; set; }
-
-        public string? IdImagen { get; set; }
-
         [BsonRepresentation(BsonType.ObjectId)]
         public string? PlantFamilyId { get; set; }
 

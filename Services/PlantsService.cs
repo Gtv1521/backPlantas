@@ -26,11 +26,11 @@ namespace PlantasBackend.Services
 
 
         // method for into one plants.
-        public async Task<bool> InsertOneAsync(PlantsDto model)
+        public async Task<bool> InsertOneAsync(AllPlantDto model)
         {
             try
             {
-                (string Imagen, string IdImagen) = await _upImage.UpCloudinary(model.Image);
+                (string Imagen, string IdImagen) = await _upImage.UpCloudinary(model.Image, "Plants");
 
                 var modelo = new PlantsModel
                 {
@@ -38,7 +38,8 @@ namespace PlantasBackend.Services
                     Description = model.Description,
                     Imagen = Imagen,
                     IdImagen = IdImagen,
-                    PlantFamilyId = "5f6d8653404d614218f0b596",
+                    PlantFamilyId = model.PlantFamilyId,
+                    DiseaseIds = model.DiseaseIds,
                 };
                 _upImage.DeleteDir();
                 await _interface.InsertData(modelo);
@@ -71,6 +72,8 @@ namespace PlantasBackend.Services
         {
             try
             {
+                var resul = await GetOneAsync(id);
+                await _upImage.DeleteCloudinary(resul.IdImagen);
                 await _interface.DeleteById(id);
                 return true;
             }
@@ -81,6 +84,7 @@ namespace PlantasBackend.Services
             }
         }
 
+        // method for get data of one disease
         public Task<PlantsModel> GetOneAsync(string id)
         {
             try
@@ -93,6 +97,7 @@ namespace PlantasBackend.Services
             }
         }
 
+        // method for getting something data from of diseases
         public Task<List<PlantsModel>> GetAllAsync()
         {
             try
@@ -104,6 +109,8 @@ namespace PlantasBackend.Services
                 throw new ApplicationException($"Failed to get all data - {ex.Message}");
             }
         }
+
+        //method for getting one plant for name 
         public async Task<PlantsModel> GetByNameAsync(string name)
         {
             try
