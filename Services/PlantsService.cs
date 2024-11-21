@@ -84,6 +84,7 @@ namespace PlantasBackend.Services
             }
         }
 
+        // method for get data of one disease
         public Task<PlantsModel> GetOneAsync(string id)
         {
             try
@@ -96,6 +97,7 @@ namespace PlantasBackend.Services
             }
         }
 
+        // method for getting something data from of diseases
         public Task<List<PlantsModel>> GetAllAsync()
         {
             try
@@ -107,6 +109,8 @@ namespace PlantasBackend.Services
                 throw new ApplicationException($"Failed to get all data - {ex.Message}");
             }
         }
+
+        //method for getting one plant for name 
         public async Task<PlantsModel> GetByNameAsync(string name)
         {
             try

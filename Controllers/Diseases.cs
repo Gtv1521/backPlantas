@@ -33,9 +33,9 @@ namespace PlantasBackend.Controllers
         /// <response code="500">Error internal server.</response>
         [HttpGet]
         [Route("view_all")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DiseasesModel))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<DiseasesModel>))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultData))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
         public async Task<IActionResult> GetAllDiseases()
         {
             try
@@ -48,7 +48,7 @@ namespace PlantasBackend.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Error getting diseases: {ex.Message}");
-                return Problem("An error occurred.", "/api/diseases", 500, "Server Error");
+                return Problem(ex.Message, "/api/diseases", 500, "Server error");
             }
         }
 
@@ -66,13 +66,12 @@ namespace PlantasBackend.Controllers
         ///     }
         /// </remarks>
         /// <response code="200">Disease.</response>
-        /// <response code="404">Not found.</response>
         /// <response code="500">Error server.</response>
         [HttpGet]
         [Route("view_disease/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DiseasesModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultData))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
         public async Task<IActionResult> GetByDiseases(string id)
         {
             try
@@ -84,8 +83,8 @@ namespace PlantasBackend.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error getting disease: {ex.Message}");
-                return Problem("An error occurred.", "/api/diseases", 500, "Server Error");
+                _logger.LogError($"Error getting disease which id: {id}-- {DateTime.UtcNow} -- {ex.Message}");
+                return Problem(ex.Message, "/api/diseases", 500, "Server Error");
             }
         }
 
@@ -106,39 +105,28 @@ namespace PlantasBackend.Controllers
         /// </remarks>
         /// <response code="200">Disease.</response>
         /// <response code="400">Failed of get data.</response>
-        /// <response code="404">Not found.</response>
         /// <response code="500">Error server.</response>
         [HttpPost]
         [Route("insert")]
         [Consumes("multipart/form-data")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultData))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultData))]
-        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultData))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
+
         public async Task<IActionResult> InsertDisease([FromForm] DiseasesDto model)
         {
             try
             {
-                if (await _service.InsertOneAsync(model))
-                {
-                    _logger.LogInformation("Added a new disease.");
-                    return Ok(new ResultData
-                    {
-                        StatusCode = 200,
-                        Message = "Disease add successfully."
-                    });
-                }
-                return BadRequest(new ResultData
-                {
-                    StatusCode = 400,
-                    Message = "Error failed insert data."
-                });
+                _logger.LogInformation($"Added a new disease -- {DateTime.UtcNow}.");
+                var result = await _service.InsertOneAsync(model);
+                if (result) return Ok(new ResultData { StatusCode = 200, Message = "Disease add successfully." });
+                return BadRequest(new ResultData { StatusCode = 400, Message = "Error failed insert data." });
 
             }
             catch (System.Exception ex)
             {
-                _logger.LogError($"Error getting disease: {ex.Message}");
-                return Problem("An error occurred.", "/api/diseases", 500, "Server Error");
+                _logger.LogError($"Error at inseert new disease -- {DateTime.UtcNow} -- {ex.Message}");
+                return Problem(ex.Message, "/api/diseases/insert", 500, "Server error");
             }
 
         }
@@ -165,31 +153,20 @@ namespace PlantasBackend.Controllers
         [Consumes("multipart/form-data")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultData))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultData))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateDisease([FromBody] DiseasesModel model)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
+        public async Task<IActionResult> UpdateDisease([FromBody] DataDiseaseDto model)
         {
             try
             {
-                if (await _service.UpdateOneAsync(model))
-                {
-                    _logger.LogInformation("Updated disease.");
-                    return Ok(new ResultData
-                    {
-                        StatusCode = 200,
-                        Message = "Disease updated successfully."
-                    });
-                }
-                return BadRequest(new ResultData
-                {
-                    StatusCode = 400,
-                    Message = "Error failed update disease."
-                });
-
+                _logger.LogInformation($"Updated disease -- {DateTime.UtcNow}.");
+                var result = await _service.UpdateOneAsync(model);
+                if (result) return Ok(new ResultData { StatusCode = 200, Message = "Disease updated successfully." });
+                return BadRequest(new ResultData { StatusCode = 400, Message = "Error failed update disease." });
             }
             catch (System.Exception ex)
             {
-                _logger.LogError($"Error getting disease: {ex.Message}");
-                return Problem("An error occurred.", "/api/diseases", 500, "Server Error");
+                _logger.LogError($"Error update disease -- {DateTime.UtcNow} -- {ex.Message}");
+                return Problem(ex.Message, "/api/diseases/update", 500, "Server error");
             }
         }
 
@@ -207,37 +184,26 @@ namespace PlantasBackend.Controllers
         ///     }
         /// </remarks>
         /// <response code="200">Disease.</response>
-        /// <response code="404">Not found.</response>
+        /// <response code="404">Not found data </response>
         /// <response code="500">Error server.</response>
         [HttpDelete]
         [Route("delete/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultData))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultData))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultData))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
         public async Task<IActionResult> DeleteDisease(string id)
         {
             try
             {
-                if (await _service.DeleteOneAsync(id))
-                {
-                    _logger.LogInformation("Deleted disease.");
-                    return Ok(new ResultData
-                    {
-                        StatusCode = 200,
-                        Message = "Disease deleted successfully."
-                    });
-                }
-                return NotFound(new ResultData
-                {
-                    StatusCode = 404,
-                    Message = $"Disease with id {id} not found."
-                });
-
+                _logger.LogInformation($"Deleted disease. -- {DateTime.UtcNow}");
+                var result = await _service.DeleteOneAsync(id);
+                if (result) return Ok(new ResultData { StatusCode = 200, Message = "Disease deleted successfully." });
+                return NotFound(new ResultData { StatusCode = 404, Message = $"Not found disease which id: {id} ." });
             }
             catch (System.Exception ex)
             {
-                _logger.LogError($"Error getting disease: {ex.Message}");
-                return Problem("An error occurred.", "/api/diseases", 500, "Server Error");
+                _logger.LogError($"Error at delete disease -- {DateTime.UtcNow} -- {ex.Message}");
+                return Problem(ex.Message, "/api/diseases/delete", 500, "Server error");
             }
         }
     }

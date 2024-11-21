@@ -15,9 +15,18 @@ namespace PlantasBackend.Utils
         private string _imagePath;
         public upImage(IOptions<CloudinaryModel> settings)
         {
-            _cloudinary = new(settings.Value.Url);
+            try
+            {
+                _cloudinary = new(settings.Value.Url);
+            }
+            catch (System.Exception ex)
+            {
+
+                throw new ApplicationException($"Failed Connecting to Cloudinary {ex.Message}");
+            }
         }
 
+        // create folder if not exists in local
         public async Task CreateFolder(string folderName)
         {
             string projectRoot = AppDomain.CurrentDomain.BaseDirectory;
@@ -32,7 +41,7 @@ namespace PlantasBackend.Utils
             }
         }
 
-
+        // create file which image 
         public async Task<string> ImageUpload(IFormFile img)
         {
             var Name = Guid.NewGuid().ToString() + ".jpg";//crea un id que sera el nombre dela imagen
@@ -47,6 +56,7 @@ namespace PlantasBackend.Utils
             return Route;
         }
 
+        // insert image into cloudinary folder
         public async Task<(string?, string?)> UpCloudinary(IFormFile image, string path)
         {
             await CreateFolder("Upload"); //crea la carpeta de uploads si no existe

@@ -17,7 +17,8 @@ namespace PlantasBackend.Collections
         {
             _collection = context.GetCollection<DiseasesModel>("Diseases");
         }
-
+        
+        // method delelte one disease
         public async Task DeleteById(string id)
         {
             try
@@ -32,6 +33,7 @@ namespace PlantasBackend.Collections
             }
         }
 
+        // method return data of somtehing diseases
         public async Task<List<DiseasesModel>> GetAllData()
         {
             try
@@ -43,7 +45,8 @@ namespace PlantasBackend.Collections
                 throw new ApplicationException($"Could not get all diseases - {ex.Message}");
             }
         }
-
+        
+        // method return data of one disease
         public async Task<DiseasesModel> GetById(string id)
         {
             try
@@ -56,11 +59,13 @@ namespace PlantasBackend.Collections
             }
         }
 
+        // method return data of one disease for name
         public Task<DiseasesModel> GetOneData(string name)
         {
             throw new NotImplementedException();
         }
-
+        
+        // method add one disease to the database
         public async Task InsertData(DiseasesModel model)
         {
             try
@@ -73,6 +78,7 @@ namespace PlantasBackend.Collections
             }
         }
 
+        // method update data of one disease
         public Task UpdateData(DiseasesModel model)
         {
             try

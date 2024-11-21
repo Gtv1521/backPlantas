@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PlantasBackend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+20e565f390e8c62c1df88c0ca615873712ca1eeb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+77028eced272915f04fe6f713f472056d1015e41")]
 [assembly: System.Reflection.AssemblyProductAttribute("PlantasBackend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PlantasBackend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -19,6 +19,7 @@ namespace PlantasBackend.Services
             _utilityImage = utilityImage;
         }
 
+        // method delete one disease 
         public async Task<bool> DeleteOneAsync(string id)
         {
             try
@@ -34,7 +35,8 @@ namespace PlantasBackend.Services
                 throw new ApplicationException($"could not delete disease '{id}' - {ex.Message}");
             }
         }
-
+        
+        // method for view somethings the diseases
         public async Task<List<DiseasesModel>> GetAllAsync()
         {
             try
@@ -46,7 +48,8 @@ namespace PlantasBackend.Services
                 throw new ApplicationException($"Could not get data for diseases - {ex.Message}");
             }
         }
-
+        
+        // method for getting data for one disease
         public async Task<DiseasesModel> GetOneAsync(string id)
         {
             try
@@ -58,18 +61,20 @@ namespace PlantasBackend.Services
                 throw new ApplicationException($"Cound not found disease with {id} - {ex.Message}");
             }
         }
-
+        
+        // method for getting one disease
         public async Task<bool> InsertOneAsync(DiseasesDto model)
         {
             try
             {
                 (string Image, string IdImage) = await _utilityImage.UpCloudinary(model.Image, "Diseases");
-                var modelo = new DiseasesModel{
+                var modelo = new DiseasesModel
+                {
                     DiseasesName = model.Name,
                     DiseasesDescription = model.Description,
                     Imagen = Image,
                     IdImage = IdImage,
-                }; 
+                };
                 await _diseases.InsertData(modelo);
                 return true;
             }
@@ -79,18 +84,29 @@ namespace PlantasBackend.Services
                 throw new ApplicationException($"Could not insert data for disease - {ex.Message}");
             }
         }
-
-        public async Task<bool> UpdateOneAsync(DiseasesModel model)
+        
+        // method update disease
+        public async Task<bool> UpdateOneAsync(DataDiseaseDto model)
         {
             try
             {
-                await _diseases.UpdateData(model);
+                (string Image, string IdImage) = await _utilityImage.UpCloudinary(model.Image, "Diseases");
+                var modelo = new DiseasesModel
+                {
+                    Id = model.Id,
+                    DiseasesName = model.Name,
+                    DiseasesDescription = model.Description,
+                    Imagen = Image,
+                    IdImage = IdImage
+                };
+
+                await _diseases.UpdateData(modelo);
                 return true;
             }
             catch (System.Exception ex)
             {
                 return false;
-                throw new ApplicationException($"Could not update disease '{model.DiseasesName}' - {ex.Message}");
+                throw new ApplicationException($"Could not update disease '{model.Name}' - {ex.Message}");
             }
         }
     }

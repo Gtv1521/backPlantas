@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
@@ -33,6 +34,12 @@ builder.Services.AddScoped<IDataCrud<DiseasesModel>, DiseasesCollection>();
 builder.Services.AddScoped<IOneData<DiseasesModel>, DiseasesCollection>();
 builder.Services.AddScoped<DiseasesService>();
 
+builder.Services.AddScoped<IDataCrud<PlagueModel>, PlagueCollection>();
+builder.Services.AddScoped<PlagueService>();
+
+builder.Services.AddScoped<IDataCrud<FamilyModel>, FamilyCollection>();
+builder.Services.AddScoped<FamilyService>();
+
 builder.Services.AddScoped<upImage>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -44,7 +51,7 @@ builder.Services.AddSwaggerGen(options =>
         Title = "Plantas API",
         Version = "v1",
         Description = "Esta API REST permite la creación, lectura, actualización y eliminación de notas para una aplicación de gestión de notas. Está diseñada para proporcionar una manera sencilla y eficiente de que los usuarios gestionen sus notas personales, con soporte para la organización de las mismas por categorías o etiquetas, y para la sincronización entre diferentes dispositivos.",
-        // TermsOfService = new Uri(""),
+        TermsOfService = new Uri("https://example.com/license"),
         Contact = new OpenApiContact
         {
             Name = "Gustavo Bernal",
@@ -137,7 +144,7 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();

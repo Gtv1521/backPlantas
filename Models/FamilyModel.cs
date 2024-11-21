@@ -6,13 +6,17 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace PlantasBackend.Dto
+namespace PlantasBackend.Models
 {
-    public class IdPlantsDto :AllPlantDto
+    public class FamilyModel
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         [Required]
         public string? Id { get; set; }
+        [Required]
+        public string? Name { get; set; }
+        [Required]
+        public string? Description { get; set; }
     }
 }
