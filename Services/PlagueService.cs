@@ -72,6 +72,7 @@ namespace PlantasBackend.Services
                 };
 
                 await _collection.InsertData(modelo);
+                _image.DeleteDir(); // delete image en folder local
                 return true;
             }
             catch (System.Exception)

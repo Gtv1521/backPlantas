@@ -101,6 +101,7 @@ namespace PlantasBackend.Services
                 };
 
                 await _diseases.UpdateData(modelo);
+                _utilityImage.DeleteDir();
                 return true;
             }
             catch (System.Exception ex)
