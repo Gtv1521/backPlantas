@@ -40,7 +40,7 @@ namespace PlantasBackend.Controllers
             {
                 _logger.LogInformation("Request data for all plagues -- {Time}", DateTime.UtcNow);
                 var result = await _service.GetAllAsync();
-                if (result.Count > 0) return NotFound(new ResultData { StatusCode = 404, Message = "Not found data fot plague" });
+                if (result.Count == 0) return NotFound(new ResultData { StatusCode = 404, Message = "Not found data fot plague" });
                 return Ok(result);
             }
             catch (System.Exception ex)
