@@ -64,7 +64,7 @@ namespace PlantasBackend.Collections
         {
             try
             {
-                var filter = Builders<PlantsModel>.Filter.Eq("Name", name);
+                var filter = Builders<PlantsModel>.Filter.Regex("Name", new BsonRegularExpression(name, "i"));
                 var result = await _collection.Find(filter).FirstOrDefaultAsync();
                 return result;
 

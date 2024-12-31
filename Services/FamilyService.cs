@@ -11,10 +11,12 @@ namespace PlantasBackend.Services
     public class FamilyService
     {
         private readonly IDataCrud<FamilyModel> _collection;
+        private readonly IOneData<FamilyModel> _collectionOne;
 
-        public FamilyService(IDataCrud<FamilyModel> collection)
+        public FamilyService(IDataCrud<FamilyModel> collection, IOneData<FamilyModel> collectionOne)
         {
             _collection = collection;
+            _collectionOne = collectionOne;
         }
 
         // Method for deleted one family
@@ -43,6 +45,19 @@ namespace PlantasBackend.Services
             {
 
                 throw new ApplicationException($"Failed of get data familys - {ex.Message} ");
+            }
+        }
+        
+        // method get data for family for the name
+        public async Task<FamilyModel> GetFamilyPlant(string name)
+        {
+            try
+            {
+                return await _collectionOne.GetOneData(name);
+            }
+            catch (System.Exception ex)
+            {
+                throw new ApplicationException($"Failed of get data family- {ex.Message}");
             }
         }
 

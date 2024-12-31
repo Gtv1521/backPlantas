@@ -88,6 +88,35 @@ namespace PlantasBackend.Controllers
         }
 
         /// <summary>
+        /// Get data of family for the name 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        /// <response code="200">OK</response>
+        /// <response code="404">Not found </response>
+        /// <response code="500">server error</response>
+        [HttpGet]
+        [Route("view_family_name/{name}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(FamilyModel))]
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(ResultData))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
+        public async Task<IActionResult> GetFamilyByName(string name)
+        {
+            try
+            {
+                _logger.LogInformation("Get interface family");
+                var result = await _service.GetFamilyPlant(name);
+                if (result == null) return NotFound(new ResultData { StatusCode = 404, Message = "Not found data of family" });
+                return Ok(result);
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError("Failed get data for family {Time}", DateTime.UtcNow);
+                return Problem(ex.Message, "/Api/Family/view_family_name/{name}", 500, "Server error");
+            }
+        }
+
+        /// <summary>
         /// Insert data into family.
         /// </summary>
         /// <returns></returns>

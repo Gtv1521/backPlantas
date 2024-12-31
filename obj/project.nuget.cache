@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qK8qRNGMSR9+aaPMQcHD6ysMRQFsgEZPrcguBWDwj8i7qORdCO27p0c8hFcYeUCE0e3U31DYwy5d2PSGnINwTw==",
+  "dgSpecHash": "vXO13r2pTRy6SonnPWVLPuqM9kAGSvbrb3+LBsUTGOl0zfhIQaPnzIrdtufziqlgQp/YzlYYSnMeTCaq/tJVxQ==",
   "success": true,
   "projectFilePath": "/home/gustavo/Documentos/Desarrollo/C#/PlantasBackend/PlantasBackend.csproj",
   "expectedPackageFiles": [
@@ -83,7 +83,7 @@
     "/home/gustavo/.nuget/packages/system.threading/4.3.0/system.threading.4.3.0.nupkg.sha512",
     "/home/gustavo/.nuget/packages/system.threading.tasks/4.3.0/system.threading.tasks.4.3.0.nupkg.sha512",
     "/home/gustavo/.nuget/packages/zstdsharp.port/0.7.3/zstdsharp.port.0.7.3.nupkg.sha512",
-    "/home/gustavo/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.10/microsoft.aspnetcore.app.ref.8.0.10.nupkg.sha512"
+    "/home/gustavo/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.11/microsoft.aspnetcore.app.ref.8.0.11.nupkg.sha512"
   ],
   "logs": []
 }

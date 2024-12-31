@@ -27,10 +27,9 @@ namespace PlantasBackend.Services
                 await _collection.DeleteById(id);
                 return true;
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 return false;
-                // throw new ApplicationException($"Failed to delete  plague {id} -- {ex.Message} ");
             }
         }
 
@@ -78,7 +77,6 @@ namespace PlantasBackend.Services
             catch (System.Exception)
             {
                 return false;
-                // throw new ApplicationException($"Failed at inserting plague {ex.Message}");
             }
         }
 
