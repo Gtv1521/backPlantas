@@ -114,6 +114,16 @@
             <response code="404">No data family</response>
             <response code="500">Error server</response>
         </member>
+        <member name="M:PlantasBackend.Controllers.Family.GetFamilyByName(System.String)">
+            <summary>
+            Get data of family for the name 
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+            <response code="200">OK</response>
+            <response code="404">Not found </response>
+            <response code="500">server error</response>
+        </member>
         <member name="M:PlantasBackend.Controllers.Family.InsertFamily(PlantasBackend.Dto.PlantsDto)">
             <summary>
             Insert data into family.

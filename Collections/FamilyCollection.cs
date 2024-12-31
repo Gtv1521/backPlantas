@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -10,7 +11,7 @@ using PlantasBackend.Repositories;
 
 namespace PlantasBackend.Collections
 {
-    public class FamilyCollection : IDataCrud<FamilyModel>
+    public class FamilyCollection : IDataCrud<FamilyModel>, IOneData<FamilyModel>
     {
         private readonly IMongoCollection<FamilyModel> _collection;
         public FamilyCollection(Context context)
@@ -51,6 +52,19 @@ namespace PlantasBackend.Collections
             catch (System.Exception ex)
             {
                 throw new ApplicationException($"Could not find data of {id} - {ex.Message}");
+            }
+        }
+
+        public async Task<FamilyModel> GetOneData(string name)
+        {
+            try
+            {
+                var filter = Builders<FamilyModel>.Filter.Regex("Name", new BsonRegularExpression(name, "i"));
+                return await _collection.Find(filter).FirstOrDefaultAsync();
+            }
+            catch (System.Exception ex)
+            {   
+                throw new ApplicationException($"Could not find data of {name} - {ex.Message}");   
             }
         }
 

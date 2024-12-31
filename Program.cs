@@ -38,6 +38,7 @@ builder.Services.AddScoped<IDataCrud<PlagueModel>, PlagueCollection>();
 builder.Services.AddScoped<PlagueService>();
 
 builder.Services.AddScoped<IDataCrud<FamilyModel>, FamilyCollection>();
+builder.Services.AddScoped<IOneData<FamilyModel>, FamilyCollection>();
 builder.Services.AddScoped<FamilyService>();
 
 builder.Services.AddScoped<upImage>();
@@ -144,7 +145,7 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
