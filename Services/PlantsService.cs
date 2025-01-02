@@ -111,7 +111,7 @@ namespace PlantasBackend.Services
         }
 
         //method for getting one plant for name 
-        public async Task<PlantsModel> GetByNameAsync(string name)
+        public async Task<List<PlantsModel>> GetByNameAsync(string name)
         {
             try
             {

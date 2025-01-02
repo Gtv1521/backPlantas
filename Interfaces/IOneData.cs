@@ -7,6 +7,6 @@ namespace PlantasBackend.Interfaces
 {
     public interface IOneData<T>
     {
-        Task<T> GetOneData(string name);        
+        Task<List<T>> GetOneData(string name);        
     }
 }

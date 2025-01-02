@@ -49,7 +49,7 @@ namespace PlantasBackend.Services
         }
         
         // method get data for family for the name
-        public async Task<FamilyModel> GetFamilyPlant(string name)
+        public async Task<List<FamilyModel>> GetFamilyPlant(string name)
         {
             try
             {

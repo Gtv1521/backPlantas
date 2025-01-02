@@ -60,15 +60,13 @@ namespace PlantasBackend.Collections
         }
         
         // method return data of one plant for name
-        public async Task<PlantsModel> GetOneData(string name)
+        public async Task<List<PlantsModel>> GetOneData(string name)
         {
             try
             {
                 var filter = Builders<PlantsModel>.Filter.Regex("Name", new BsonRegularExpression(name, "i"));
-                var result = await _collection.Find(filter).FirstOrDefaultAsync();
+                var result = await _collection.Find(filter).ToListAsync();
                 return result;
-
-                 
             }
             catch (System.Exception ex)
             {
