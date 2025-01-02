@@ -104,7 +104,7 @@ namespace PlantasBackend.Controllers
         {
             try
             {
-                _logger.LogInformation("Get interface family");
+                _logger.LogInformation("Get interface family - {Time}", DateTime.UtcNow);
                 var result = await _service.GetFamilyPlant(name);
                 if (result == null) return NotFound(new ResultData { StatusCode = 404, Message = "Not found data of family" });
                 return Ok(result);

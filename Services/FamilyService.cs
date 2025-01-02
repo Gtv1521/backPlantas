@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PlantasBackend.Dto;
+using PlantasBackend.Dto.Familys;
 using PlantasBackend.Interfaces;
 using PlantasBackend.Models;
 
@@ -11,9 +12,9 @@ namespace PlantasBackend.Services
     public class FamilyService
     {
         private readonly IDataCrud<FamilyModel> _collection;
-        private readonly IOneData<FamilyModel> _collectionOne;
+        private readonly IOneData<FamilyNameDto> _collectionOne;
 
-        public FamilyService(IDataCrud<FamilyModel> collection, IOneData<FamilyModel> collectionOne)
+        public FamilyService(IDataCrud<FamilyModel> collection, IOneData<FamilyNameDto> collectionOne)
         {
             _collection = collection;
             _collectionOne = collectionOne;
@@ -49,7 +50,7 @@ namespace PlantasBackend.Services
         }
         
         // method get data for family for the name
-        public async Task<List<FamilyModel>> GetFamilyPlant(string name)
+        public async Task<List<FamilyNameDto>> GetFamilyPlant(string name)
         {
             try
             {

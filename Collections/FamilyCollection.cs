@@ -5,13 +5,14 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using PlantasBackend.Dto.Familys;
 using PlantasBackend.Interfaces;
 using PlantasBackend.Models;
 using PlantasBackend.Repositories;
 
 namespace PlantasBackend.Collections
 {
-    public class FamilyCollection : IDataCrud<FamilyModel>, IOneData<FamilyModel>
+    public class FamilyCollection : IDataCrud<FamilyModel>, IOneData<FamilyNameDto>
     {
         private readonly IMongoCollection<FamilyModel> _collection;
         public FamilyCollection(Context context)
@@ -55,16 +56,22 @@ namespace PlantasBackend.Collections
             }
         }
 
-        public async Task<List<FamilyModel>> GetOneData(string name)
+        public async Task<List<FamilyNameDto>> GetOneData(string name)
         {
             try
             {
                 var filter = Builders<FamilyModel>.Filter.Regex("Name", new BsonRegularExpression(name, "i"));
-                return await _collection.Find(filter).ToListAsync();
+                var projection = Builders<FamilyModel>.Projection
+                .Include(p => p.Id)
+                .Include(p => p.Name);
+
+                return await _collection.Find(filter)
+                .Project<FamilyNameDto>(projection)
+                .ToListAsync();
             }
             catch (System.Exception ex)
-            {   
-                throw new ApplicationException($"Could not find data of {name} - {ex.Message}");   
+            {
+                throw new ApplicationException($"Could not find data of {name} - {ex.Message}");
             }
         }
 
