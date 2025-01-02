@@ -60,7 +60,7 @@ namespace PlantasBackend.Collections
         }
 
         // method return data of one disease for name
-        public Task<DiseasesModel> GetOneData(string name)
+        public Task<List<DiseasesModel>> GetOneData(string name)
         {
             throw new NotImplementedException();
         }

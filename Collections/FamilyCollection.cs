@@ -55,12 +55,12 @@ namespace PlantasBackend.Collections
             }
         }
 
-        public async Task<FamilyModel> GetOneData(string name)
+        public async Task<List<FamilyModel>> GetOneData(string name)
         {
             try
             {
                 var filter = Builders<FamilyModel>.Filter.Regex("Name", new BsonRegularExpression(name, "i"));
-                return await _collection.Find(filter).FirstOrDefaultAsync();
+                return await _collection.Find(filter).ToListAsync();
             }
             catch (System.Exception ex)
             {   
