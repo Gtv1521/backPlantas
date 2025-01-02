@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using PlantasBackend.Collections;
+using PlantasBackend.Dto.Familys;
 using PlantasBackend.Interfaces;
 using PlantasBackend.Models;
 using PlantasBackend.Models.Responses;
@@ -38,7 +39,7 @@ builder.Services.AddScoped<IDataCrud<PlagueModel>, PlagueCollection>();
 builder.Services.AddScoped<PlagueService>();
 
 builder.Services.AddScoped<IDataCrud<FamilyModel>, FamilyCollection>();
-builder.Services.AddScoped<IOneData<FamilyModel>, FamilyCollection>();
+builder.Services.AddScoped<IOneData<FamilyNameDto>, FamilyCollection>();
 builder.Services.AddScoped<FamilyService>();
 
 builder.Services.AddScoped<upImage>();
